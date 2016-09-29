@@ -11,7 +11,7 @@ import android.view.ViewGroup;
  * First Fragment
  */
 
-public class FragmentOne extends Fragment{
+public class FragmentOne extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_one, container, false);

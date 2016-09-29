@@ -8,6 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+
 /**
  * Created by Avijeet on 26-Sep-16.
  * New activity on created to learn about the Activities Life cycle
@@ -35,6 +41,21 @@ public class Main2Activity extends Activity {
     protected void onResume() {
         super.onResume();
         Log.d(msg, "onResume has fired!");
+
+        Document doc = null;
+        Elements newsHeadlines = null;
+
+        try {
+            Log.i("ASD", "ASD");
+            doc = Jsoup.connect("http://news.google.co.in/").get();
+            System.out.println("Doc ---> " + doc.toString());
+            newsHeadlines = doc.select(".section-content .esc-lead-article-title-wrapper span");
+            Log.i("Yo!", newsHeadlines.toString());
+        } catch (Exception e) {
+            System.out.println("Exception is ---> " + e.getMessage());
+            e.printStackTrace();
+            Log.e("Damn!", "Not Working!");
+        }
     }
 
     @Override
@@ -69,4 +90,6 @@ public class Main2Activity extends Activity {
         ft.replace(R.id.fragment_place, fr);
         ft.commit();
     }
+
+
 }
