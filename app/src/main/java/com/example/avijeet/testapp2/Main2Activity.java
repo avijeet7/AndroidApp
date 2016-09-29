@@ -22,7 +22,6 @@ import java.io.IOException;
 
 public class Main2Activity extends Activity {
     String msg = "2nd Activity";
-    View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,10 +88,8 @@ public class Main2Activity extends Activity {
             try {
                 doc = Jsoup.connect("http://news.google.co.in/").get();
 //                System.out.println("Doc ---> " + doc.toString());
-                newsHeadlines = doc.select(".section-content .esc-lead-article-title-wrapper");
-                System.out.println("X");
-                System.out.println(newsHeadlines.attr("span"));
-                System.out.println("Y");
+//                newsHeadlines = doc.select(".section-content .esc-lead-article-title-wrapper");
+                System.out.println(doc.text());
             } catch (Exception e) {
                 Log.e("Damn!", "Not Working!");
             }
