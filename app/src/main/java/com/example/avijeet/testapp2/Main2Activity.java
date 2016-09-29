@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ public class Main2Activity extends Activity {
         setContentView(R.layout.activity_2);
         String name = getIntent().getStringExtra("Name");
         Log.d(msg, "onCreate event has fired!");
+        new LongOperation().execute("");
     }
 
     @Override
@@ -41,21 +43,6 @@ public class Main2Activity extends Activity {
     protected void onResume() {
         super.onResume();
         Log.d(msg, "onResume has fired!");
-
-        Document doc = null;
-        Elements newsHeadlines = null;
-
-        try {
-            Log.i("ASD", "ASD");
-            doc = Jsoup.connect("http://news.google.co.in/").get();
-            System.out.println("Doc ---> " + doc.toString());
-            newsHeadlines = doc.select(".section-content .esc-lead-article-title-wrapper span");
-            Log.i("Yo!", newsHeadlines.toString());
-        } catch (Exception e) {
-            System.out.println("Exception is ---> " + e.getMessage());
-            e.printStackTrace();
-            Log.e("Damn!", "Not Working!");
-        }
     }
 
     @Override
@@ -91,5 +78,45 @@ public class Main2Activity extends Activity {
         ft.commit();
     }
 
+    private class LongOperation extends AsyncTask<String, Void, String> {
 
+        @Override
+        protected String doInBackground(String... params) {
+
+            Document doc = null;
+            Elements newsHeadlines = null;
+
+            try {
+                doc = Jsoup.connect("http://news.google.co.in/").get();
+//                System.out.println("Doc ---> " + doc.toString());
+                newsHeadlines = doc.select(".section-content .esc-lead-article-title-wrapper");
+                System.out.println("X");
+                System.out.println(newsHeadlines.attr("span"));
+                System.out.println("Y");
+            } catch (Exception e) {
+                Log.e("Damn!", "Not Working!");
+            }
+
+            for (int i=0; i<5; i++) {
+                try {
+                    Thread.sleep(1000);
+                }
+                catch (InterruptedException e) {
+                    Thread.interrupted();
+                }
+            }
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i("MSG: ", "Executed");
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
 }
