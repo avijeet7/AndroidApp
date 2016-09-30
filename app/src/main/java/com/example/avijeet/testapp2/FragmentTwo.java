@@ -16,12 +16,14 @@ import android.widget.TextView;
 public class FragmentTwo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_two, container, false);
+        final View view = inflater.inflate(R.layout.fragment_two, container, false);
 
         Button b1 = (Button)view.findViewById(R.id.btn_search);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView tv = (TextView) view.findViewById(R.id.textView2);
+                tv.setTextSize(50);
                 System.out.println("SSS");
             }
         });
